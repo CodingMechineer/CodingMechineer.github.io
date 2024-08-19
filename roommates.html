@@ -199,6 +199,35 @@
         font-weight: 600;
     }
 
+
+    select#nationality-filter {
+        background-color: #ffffff;
+        color: #BA0C2F;
+        border: 2px solid #BA0C2F;
+        border-radius: 8px;
+        padding: 8px 16px;
+        font-size: 16px;
+        font-weight: 600;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        margin-bottom: 20px;
+        width: 100%;
+        max-width: 250px;
+        box-sizing: border-box;
+    }
+
+    select#nationality-filter:hover {
+        background-color: #BA0C2F;
+        color: white;
+        border-color: #a00a2a;
+    }
+
+    select#nationality-filter:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(186, 12, 47, 0.3);
+    }
+    
     </style>
     <script>
         function requestDataAccess(name) {
@@ -259,10 +288,17 @@
             <img src="Media\DAWG_HOUSING.png" alt="UGA Housing Logo" class="logo">
         </header>
         <main>
-            <h1 class="title">UGA Roommate Finder</h1>
+            <h1 class="title">Roommate Finder</h1>
+            
+            <select id="nationality-filter">
+                <option value="">All Nationalities</option>
+                <option value="Pakistan">Pakistan</option>
+                <option value="USA">USA</option>
+                <option value="Costa Rica">Costa Rica</option>
+                <option value="Switzerland">Switzerland</option>
+            </select>
+
             <ul class="user-list">
-                
-                
                 <li>
                     <div class="user-details">
                         <span class="user-name">John Doe</span>
