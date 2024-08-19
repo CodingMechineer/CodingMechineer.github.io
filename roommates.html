@@ -113,23 +113,6 @@
         border: 2px solid white;
     }
 
-    /* Hidden content by default */
-    .expanded-content {
-        display: none;
-        margin-top: 15px;
-        background: #ffffff;
-        color: #333;
-        padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 100%;
-    }
-
-    .user-list li.expanded .expanded-content {
-        display: block;
-    }
-
-    /* Blurred Image and Hidden Name */
     .blurred {
         filter: blur(10px);
     }
@@ -149,7 +132,7 @@
         font-weight: 600;
         text-transform: uppercase;
         transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-        align-self: center;
+        align-self: left;
         margin-top: 10px;
     }
 
@@ -170,6 +153,52 @@
         font-weight: 600;
         color: #333;
     }
+
+    .schedule-button {
+        background-color: #ffffff;
+        color: #BA0C2F;
+        border: 2px solid #BA0C2F;
+        border-radius: 8px;
+        padding: 8px 16px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        align-self: center;
+        margin-top: 15px;
+    }
+
+    .schedule-button:hover {
+        background-color: #BA0C2F;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .schedule-button:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(186, 12, 47, 0.3);
+    }
+
+    .additional-info {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        font-size: 16px;
+        color: #BA0C2F;
+        text-align: left;
+    }
+
+    .additional-info p {
+        margin: 5px 0;
+        font-weight: bold;
+    }
+
+    .additional-info strong {
+        font-weight: 600;
+    }
+
     </style>
     <script>
         function requestDataAccess(name) {
@@ -179,14 +208,50 @@
             userElement.querySelector('.user-image').classList.remove('blurred');
             document.getElementById('message').textContent = `Request to access ${name}'s data has been granted.`;
         }
-    </script>
-    </style>
-    <script>
-        function toggleExpand(event) {
-            const listItem = event.currentTarget;
-            listItem.classList.toggle('expanded');
+
+        function expandUserDetails(event) {
+            const clickedElement = event.target;
+            if (clickedElement.classList.contains('user-image')) {
+                return;
+            }
+
+            const userElement = event.currentTarget;
+            const userDetails = userElement.querySelector('.user-details');
+            const scheduleButton = userDetails.querySelector('.schedule-button');
+            const additionalInfo = userDetails.querySelector('.additional-info');
+
+            if (scheduleButton) {
+                scheduleButton.remove();
+            } else {
+                const newScheduleButton = document.createElement('button');
+                newScheduleButton.className = 'schedule-button';
+                newScheduleButton.textContent = 'Schedule a meeting in Tate Center';
+                newScheduleButton.onclick = function() {
+                    // Add your scheduling logic here
+                    alert('Meeting scheduling functionality will be added here.');
+                };
+
+                userDetails.appendChild(newScheduleButton);
+            }
+
+            if (additionalInfo.style.display === 'none') {
+                additionalInfo.style.display = 'block';
+                scheduleButton.textContent = 'Hide additional info';
+            } else {
+                additionalInfo.style.display = 'none';
+                scheduleButton.textContent = 'Schedule a meeting';
+            }
         }
+
+        // Add event listeners to user list items
+        document.addEventListener('DOMContentLoaded', () => {
+            const userListItems = document.querySelectorAll('.user-list li');
+            userListItems.forEach(item => {
+                item.addEventListener('click', expandUserDetails);
+            });
+        });
     </script>
+
 </head>
 <body>
     <div class="container">
@@ -196,7 +261,9 @@
         <main>
             <h1 class="title">UGA Roommate Finder</h1>
             <ul class="user-list">
-                <li onclick="toggleExpand(event)">
+                
+                
+                <li>
                     <div class="user-details">
                         <span class="user-name">John Doe</span>
                         <span class="user-major">Computer Science</span>
@@ -206,19 +273,17 @@
                             <img src="Media/pakistan-flag.png" alt="Pakistan Flag">
                         </span>
                         <span class="user-hobbies">Hobbies: Gaming, Hiking</span>
+
+                        <div class="additional-info" style="display: none;">
+                            <p><strong>Searching for housing:</strong> 3 months</p>
+                            <p><strong>Timeframe:</strong> Immediate</p>
+                            <p><strong>Budget:</strong> $1000 - $1500</p>
+                        </div>
                     </div>
                     <img src="Media/guy2.jpeg" alt="John Doe's picture" class="user-image">
-                    <div class="expanded-content">
-                        <span class="user-age">Age: 21</span>
-                        <span class="user-gender">Gender: Male</span>
-                        <span class="user-hometown">Hometown: Islamabad, Pakistan
-                            <img src="Media/pakistan-flag.png" alt="Pakistan Flag">
-                        </span>
-                        <span class="user-hobbies">Hobbies: Gaming, Hiking</span>
-                    </div>
-            
-                    
                 </li>
+                
+
                 <li>
                     <div class="user-details">
                         <span class="user-name">Jane Smith</span>
@@ -229,9 +294,17 @@
                             <img src="Media/usa-flag.png" alt="USA Flag">
                         </span>
                         <span class="user-hobbies">Hobbies: Reading, Swimming</span>
+                        
+                        <div class="additional-info" style="display: none;">
+                            <p><strong>Searching for housing:</strong> 2 months</p>
+                            <p><strong>Timeframe:</strong> Fall 2025 Semester</p>
+                            <p><strong>Budget:</strong> $800 - $1200</p>
+                        </div>
                     </div>
                     <img src="Media/girl2.jpeg" alt="Jane Smith's picture" class="user-image">
                 </li>
+                
+
                 <li id="Alex Johnson">
                     <div class="user-details">
                         <span class="user-name hidden-name">Alex Johnson</span>
@@ -242,10 +315,19 @@
                             <img src="Media/usa-flag.png" alt="USA Flag">
                         </span>
                         <span class="user-hobbies">Hobbies: Cycling, Cooking</span>
+
+                        <div class="additional-info" style="display: none;">
+                            <p><strong>Searching for housing:</strong> 1 month</p>
+                            <p><strong>Timeframe:</strong> Spring 2025 Semester</p>
+                            <p><strong>Budget:</strong> $1200 - $1800</p>
+                        </div>
+
                         <button class="access-button" onclick="requestDataAccess('Alex Johnson')">Request Data Access</button>
                     </div>
                     <img src="Media/guy3.jpg" alt="Alex Johnson's picture" class="user-image blurred">
                 </li>
+
+
                 <li>
                     <div class="user-details">
                         <span class="user-name">Emily Davis</span>
@@ -256,9 +338,17 @@
                             <img src="Media/costarica-flag.png" alt="Costa Rica Flag">
                         </span>
                         <span class="user-hobbies">Hobbies: Traveling, Photography</span>
+
+                        <div class="additional-info" style="display: none;">
+                            <p><strong>Searching for housing:</strong> 4 months</p>
+                            <p><strong>Timeframe:</strong> Immediate</p>
+                            <p><strong>Budget:</strong> $900 - $1300</p>
+                        </div>
                     </div>
                     <img src="Media/girl1.jpg" alt="Emily Davis's picture" class="user-image">
                 </li>
+
+                
                 <li>
                     <div class="user-details">
                         <span class="user-name">Michael Brown</span>
@@ -269,9 +359,17 @@
                             <img src="Media/usa-flag.png" alt="USA Flag">
                         </span>
                         <span class="user-hobbies">Hobbies: Music, Sports</span>
+
+                        <div class="additional-info" style="display: none;">
+                            <p><strong>Searching for housing:</strong> 2 months</p>
+                            <p><strong>Timeframe:</strong> Fall 2025 Semester</p>
+                            <p><strong>Budget:</strong> $1000 - $1400</p>
+                        </div>
                     </div>
                     <img src="Media/guy1.jpeg" alt="Michael Brown's picture" class="user-image">
                 </li>
+
+
                 <li>
                     <div class="user-details">
                         <span class="user-name">Stefan Bürgler</span>
@@ -282,6 +380,12 @@
                             <img src="Media/swiss-flag.jpg" alt="Switzerland Flag">
                         </span>
                         <span class="user-hobbies">Hobbies: Bicycle, Running</span>
+
+                        <div class="additional-info" style="display: none;">
+                            <p><strong>Searching for housing:</strong> 3 months</p>
+                            <p><strong>Timeframe:</strong> Spring 2025 Semester</p>
+                            <p><strong>Budget:</strong> $1100 - $1500</p>
+                        </div>
                     </div>
                     <img src="Media/guy4.jpg" alt="Stefan Bürgler's picture" class="user-image">
                 </li>
