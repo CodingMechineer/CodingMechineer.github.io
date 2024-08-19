@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UGA Login</title>
+    <style>
+        /* Include the same CSS styles from before */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f4f4f4 0%, #e2e2e2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+            transition: opacity 0.5s ease;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+        }
+
+        header {
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            max-width: 500px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #BA0C2F;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .button {
+            background-color: #BA0C2F;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 16px 32px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .button:hover {
+            background-color: #a00a2a;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .button:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(186, 12, 47, 0.3);
+        }
+
+        .loading {
+            font-size: 18px;
+            color: #BA0C2F;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="Media\GEORGIA-FS-FC.png" alt="UGA Housing Logo" class="logo">
+        </header>
+        <main>
+            <h1 class="title">UGA Home Finder</h1>
+            <div class="input-group">
+                <label for="myid">Enter MyID</label>
+                <input type="text" id="myid" placeholder="Enter your MyID">
+            </div>
+            <div class="input-group">
+                <label for="password">Enter Password</label>
+                <input type="password" id="password" placeholder="Enter your password">
+            </div>
+            <button class="button" onclick="handleLogin()">Submit</button>
+            <div id="loading" class="loading" style="display: none;">Loading...</div>
+        </main>
+    </div>
+    <script>
+        function handleLogin() {
+            document.getElementById('loading').style.display = 'block';
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 2000); // Simulate loading for 2 seconds
+        }
+    </script>
+</body>
+</html>

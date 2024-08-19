@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Off Campus Housing Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        /* Two-column layout */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Left column for house listings */
+        #list {
+            width: 30%;
+            padding: 20px;
+            box-sizing: border-box;
+            background: #f4f4f4;
+            overflow-y: auto;
+        }
+
+        /* Right column for the map */
+        #map {
+            width: 70%;
+            height: 100vh;
+        }
+
+        .house-item {
+            background: white;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .house-item:hover {
+            background-color: #eaeaea;
+            transform: translateY(-2px);
+        }
+
+        .house-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #BA0C2F;
+        }
+
+        .house-details {
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <!-- Left Column: List of Houses -->
+    <div id="list">
+        <!-- House items will be dynamically added here -->
+    </div>
+
+    <!-- Right Column: Map -->
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map and set its view to Athens, GA
+        var map = L.map('map').setView([33.9519, -83.3576], 13);
+
+        // Load and display the map tiles from OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // UGA Campus location
+        var ugaCampus = [33.9519, -83.3576];
+
+        // House data with coordinates, title, number of rooms available, and distance to UGA Campus
+        var houses = [
+            {lat: 33.9550, lon: -83.3780, title: "House 1", rooms: 3},
+            {lat: 33.9600, lon: -83.3500, title: "House 2", rooms: 2},
+            {lat: 33.9500, lon: -83.3400, title: "House 3", rooms: 4},
+            {lat: 33.9400, lon: -83.3600, title: "House 4", rooms: 1},
+            {lat: 33.9700, lon: -83.3700, title: "House 5", rooms: 5}
+        ];
+
+        // Function to calculate distance between two coordinates in kilometers
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            var R = 6371; // Radius of the earth in kilometers
+            var dLat = (lat2 - lat1) * Math.PI / 180;
+            var dLon = (lon2 - lon1) * Math.PI / 180;
+            var a = 
+                0.5 - Math.cos(dLat)/2 + 
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+                (1 - Math.cos(dLon))/2;
+            return R * 2 * Math.asin(Math.sqrt(a));
+        }
+
+        // Create the house list and map markers
+        houses.forEach(function(house, index) {
+            // Calculate distance from the house to the UGA campus
+            var distanceToCampus = calculateDistance(house.lat, house.lon, ugaCampus[0], ugaCampus[1]).toFixed(2);
+
+            // Add a list item to the left column
+            var houseItem = document.createElement('div');
+            houseItem.className = 'house-item';
+            houseItem.innerHTML = `
+                <div class="house-title">${house.title}</div>
+                <div class="house-details">Distance to UGA: ${distanceToCampus} km</div>
+                <div class="house-details">Rooms available: ${house.rooms}</div>
+            `;
+            document.getElementById('list').appendChild(houseItem);
+
+            // Create a marker for the house and add it to the map
+            var marker = L.marker([house.lat, house.lon]).addTo(map)
+                .bindPopup(`
+                    <strong>${house.title}</strong><br>
+                    Distance to UGA: ${distanceToCampus} km<br>
+                    Rooms available: ${house.rooms}
+                `);
+
+            // When the list item is clicked, open the corresponding popup on the map
+            houseItem.addEventListener('click', function() {
+                map.setView([house.lat, house.lon], 15);
+                marker.openPopup();
+            });
+        });
+    </script>
+</body>
+</html>

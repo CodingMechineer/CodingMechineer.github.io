@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UGA Dashboard</title>
+    <style>
+        /* Same CSS as before */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f4f4f4 0%, #e2e2e2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        header {
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            max-width: 500px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #BA0C2F;
+        }
+
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .button {
+            background-color: #BA0C2F;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 16px 32px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+            flex: 1 1 45%;
+        }
+
+        .button:hover {
+            background-color: #a00a2a;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .button:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(186, 12, 47, 0.3);
+        }
+
+        .special-section {
+            margin-top: 40px;
+        }
+
+        .special-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #BA0C2F;
+        }
+
+        .special-button {
+            background-color: #BA0C2F;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 16px 32px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+            width: 100%;
+        }
+
+        .special-button:hover {
+            background-color: #a00a2a;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .special-button:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(186, 12, 47, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="Media\GEORGIA-FS-FC.png" alt="UGA Housing Logo" class="logo">
+        </header>
+        <main>
+            <h1 class="title">UGA Home Finder</h1>
+            <div class="button-container">
+                <button class="button">Search On Campus Housing Options</button>
+                <button class="button">Lease/Sublease Off Campus Housing</button>
+                <button class="button">View On Campus Housing Map</button>
+                <a href="off_campus_map.html"><button class="button">View Off Campus Housing Map</button></a>
+            </div>
+            <div class="special-section">
+                <h2 class="special-title">Find a UGA Roommate</h2>
+                <a href="roommates.html"><button class="special-button">Search for UGA Roommates</button></a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
