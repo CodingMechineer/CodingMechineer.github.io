@@ -113,6 +113,22 @@
         border: 2px solid white;
     }
 
+    /* Hidden content by default */
+    .expanded-content {
+        display: none;
+        margin-top: 15px;
+        background: #ffffff;
+        color: #333;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 100%;
+    }
+
+    .user-list li.expanded .expanded-content {
+        display: block;
+    }
+
     /* Blurred Image and Hidden Name */
     .blurred {
         filter: blur(10px);
@@ -164,16 +180,23 @@
             document.getElementById('message').textContent = `Request to access ${name}'s data has been granted.`;
         }
     </script>
+    </style>
+    <script>
+        function toggleExpand(event) {
+            const listItem = event.currentTarget;
+            listItem.classList.toggle('expanded');
+        }
+    </script>
 </head>
 <body>
     <div class="container">
         <header>
-            <img src="Media/GEORGIA-FS-FC.png" alt="UGA Housing Logo" class="logo">
+            <img src="Media\DAWG_HOUSING.png" alt="UGA Housing Logo" class="logo">
         </header>
         <main>
             <h1 class="title">UGA Roommate Finder</h1>
             <ul class="user-list">
-                <li>
+                <li onclick="toggleExpand(event)">
                     <div class="user-details">
                         <span class="user-name">John Doe</span>
                         <span class="user-major">Computer Science</span>
@@ -185,6 +208,16 @@
                         <span class="user-hobbies">Hobbies: Gaming, Hiking</span>
                     </div>
                     <img src="Media/guy2.jpeg" alt="John Doe's picture" class="user-image">
+                    <div class="expanded-content">
+                        <span class="user-age">Age: 21</span>
+                        <span class="user-gender">Gender: Male</span>
+                        <span class="user-hometown">Hometown: Islamabad, Pakistan
+                            <img src="Media/pakistan-flag.png" alt="Pakistan Flag">
+                        </span>
+                        <span class="user-hobbies">Hobbies: Gaming, Hiking</span>
+                    </div>
+            
+                    
                 </li>
                 <li>
                     <div class="user-details">
