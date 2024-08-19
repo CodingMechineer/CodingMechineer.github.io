@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UGA Housing App</title>
     <style>
-        /* Include the same CSS styles from before */
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
@@ -64,6 +63,8 @@
             text-transform: uppercase;
             transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
             margin-top: 20px;
+            display: block;
+            width: 100%;
         }
 
         .button:hover {
@@ -85,7 +86,8 @@
         </header>
         <main>
             <h1 class="title">UGA Home Finder</h1>
-            <button class="button" onclick="location.href='login.html'">Login with UGA My ID</button>
+            <button class="button" onclick="location.href='login.html'">Login with UGA Email</button>
+            <button class="button" onclick="location.href='manager-login.html'">Login as Property Manager</button>
         </main>
     </div>
 </body>

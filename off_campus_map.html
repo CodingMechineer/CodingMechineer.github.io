@@ -55,6 +55,10 @@
             font-size: 14px;
             color: #555;
         }
+
+        .stars {
+            color: #FFD700; /* Gold color for the stars */
+        }
     </style>
 </head>
 <body>
@@ -80,13 +84,23 @@
         // UGA Campus location
         var ugaCampus = [33.9519, -83.3576];
 
-        // House data with coordinates, title, number of rooms available, and distance to UGA Campus
+        // Property data with coordinates, title, number of rooms available, and distance to UGA Campus
         var houses = [
-            {lat: 33.9550, lon: -83.3780, title: "House 1", rooms: 3},
-            {lat: 33.9600, lon: -83.3500, title: "House 2", rooms: 2},
-            {lat: 33.9500, lon: -83.3400, title: "House 3", rooms: 4},
-            {lat: 33.9400, lon: -83.3600, title: "House 4", rooms: 1},
-            {lat: 33.9700, lon: -83.3700, title: "House 5", rooms: 5}
+            {lat: 33.9550, lon: -83.3780, title: "Property 1", rooms: 3, reviews: {stars: 4.4, count: 120}},
+            {lat: 33.9600, lon: -83.3500, title: "Property 2", rooms: 2, reviews: {stars: 3.7, count: 75}},
+            {lat: 33.9500, lon: -83.3400, title: "Property 3", rooms: 4, reviews: {stars: 4.9, count: 200}},
+            {lat: 33.9400, lon: -83.3600, title: "Property 4", rooms: 1, reviews: {stars: 2.8, count: 50}},
+            {lat: 33.9700, lon: -83.3700, title: "Property 5", rooms: 5, reviews: {stars: 4.2, count: 150}},
+            {lat: 33.9650, lon: -83.3800, title: "Property 6", rooms: 2, reviews: {stars: 3.5, count: 80}},
+            {lat: 33.9555, lon: -83.3450, title: "Property 7", rooms: 3, reviews: {stars: 4.0, count: 95}},
+            {lat: 33.9450, lon: -83.3550, title: "Property 8", rooms: 4, reviews: {stars: 4.6, count: 180}},
+            {lat: 33.9505, lon: -83.3650, title: "Property 9", rooms: 1, reviews: {stars: 3.0, count: 60}},
+            {lat: 33.9605, lon: -83.3750, title: "Property 10", rooms: 2, reviews: {stars: 4.3, count: 110}},
+            {lat: 33.9405, lon: -83.3800, title: "Property 11", rooms: 5, reviews: {stars: 4.7, count: 140}},
+            {lat: 33.9305, lon: -83.3400, title: "Property 12", rooms: 3, reviews: {stars: 4.1, count: 90}},
+            {lat: 33.9502, lon: -83.3702, title: "Property 13", rooms: 4, reviews: {stars: 4.5, count: 160}},
+            {lat: 33.9602, lon: -83.3602, title: "Property 14", rooms: 2, reviews: {stars: 3.8, count: 85}},
+            {lat: 33.9702, lon: -83.3502, title: "Property 15", rooms: 1, reviews: {stars: 2.9, count: 55}}
         ];
 
         // Function to calculate distance between two coordinates in kilometers
@@ -101,9 +115,18 @@
             return R * 2 * Math.asin(Math.sqrt(a));
         }
 
-        // Create the house list and map markers
-        houses.forEach(function(house, index) {
-            // Calculate distance from the house to the UGA campus
+        // Function to generate stars based on the rating
+        function generateStars(starCount) {
+            let stars = '';
+            for (let i = 0; i < 5; i++) {
+                stars += i < starCount ? '★' : '☆';
+            }
+            return stars;
+        }
+
+        // Create the property list and map markers
+        houses.forEach(function(house) {
+            // Calculate distance from the property to the UGA campus
             var distanceToCampus = calculateDistance(house.lat, house.lon, ugaCampus[0], ugaCampus[1]).toFixed(2);
 
             // Add a list item to the left column
@@ -113,15 +136,17 @@
                 <div class="house-title">${house.title}</div>
                 <div class="house-details">Distance to UGA: ${distanceToCampus} km</div>
                 <div class="house-details">Rooms available: ${house.rooms}</div>
+                <div class="house-details stars">${generateStars(house.reviews.stars)} (${house.reviews.stars.toFixed(1)} | ${house.reviews.count} reviews)</div>
             `;
             document.getElementById('list').appendChild(houseItem);
 
-            // Create a marker for the house and add it to the map
+            // Create a marker for the property and add it to the map
             var marker = L.marker([house.lat, house.lon]).addTo(map)
                 .bindPopup(`
                     <strong>${house.title}</strong><br>
                     Distance to UGA: ${distanceToCampus} km<br>
-                    Rooms available: ${house.rooms}
+                    Rooms available: ${house.rooms}<br>
+                    <span class="stars">${generateStars(house.reviews.stars)}</span> (${house.reviews.stars.toFixed(1)} | ${house.reviews.count} reviews)
                 `);
 
             // When the list item is clicked, open the corresponding popup on the map

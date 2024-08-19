@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>On-Campus Housing Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #list {
+            width: 30%;
+            padding: 20px;
+            box-sizing: border-box;
+            background: #f4f4f4;
+            overflow-y: auto;
+        }
+        #map {
+            width: 70%;
+            height: 100vh;
+        }
+        .house-item {
+            background: white;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .house-item:hover {
+            background-color: #eaeaea;
+            transform: translateY(-2px);
+        }
+        .house-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #BA0C2F;
+        }
+        .house-details {
+            font-size: 14px;
+            color: #555;
+        }
+        .stars {
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <div id="list"></div>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([33.9500, -83.3750], 15);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var ugaCampus = [33.9500, -83.3750];
+
+        var houses = [
+            {lat: 33.9505, lon: -83.3745, title: "University Village Building A", rooms: 4, reviews: {stars: 4.5, count: 110}},
+            {lat: 33.9510, lon: -83.3735, title: "University Village Building B", rooms: 3, reviews: {stars: 4.0, count: 90}},
+            {lat: 33.9508, lon: -83.3725, title: "University Village Building C", rooms: 5, reviews: {stars: 3.5, count: 75}},
+            {lat: 33.9506, lon: -83.3715, title: "University Village Building D", rooms: 2, reviews: {stars: 4.7, count: 120}},
+            {lat: 33.9512, lon: -83.3705, title: "Rogers Road Building N", rooms: 3, reviews: {stars: 4.3, count: 105}},
+            {lat: 33.936305049574955, lon: -83.37482189766452, title: "Creswell Hall", rooms: 5, reviews: {stars: 4.6, count: 200}},
+            {lat: 33.9370, lon: -83.3740, title: "Rooker Hall", rooms: 4, reviews: {stars: 4.2, count: 180}},
+            {lat: 33.9400, lon: -83.3745, title: "Brumby Hall", rooms: 3, reviews: {stars: 4.1, count: 170}},
+            {lat: 33.9390, lon: -83.3745, title: "Busbee Hall", rooms: 4, reviews: {stars: 4.0, count: 150}},
+            {lat: 33.9518, lon: -83.3710, title: "Rogers Road Building P", rooms: 3, reviews: {stars: 4.2, count: 95}},
+            {lat: 33.9520, lon: -83.3708, title: "Rogers Road Building Q", rooms: 4, reviews: {stars: 4.3, count: 100}},
+            {lat: 33.9516, lon: -83.3712, title: "Rogers Road Building R", rooms: 2, reviews: {stars: 4.4, count: 85}},
+            {lat: 33.9522, lon: -83.3706, title: "Rogers Road Building S", rooms: 3, reviews: {stars: 4.5, count: 90}},
+            {lat: 33.9430, lon: -83.3750, title: "University Village Building J", rooms: 4, reviews: {stars: 4.1, count: 60}},
+            {lat: 33.9420, lon: -83.3746, title: "University Village Building K", rooms: 3, reviews: {stars: 4.3, count: 70}},
+            {lat: 33.9400, lon: -83.3747, title: "University Village Building L", rooms: 5, reviews: {stars: 4.0, count: 80}},
+        ];
+
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            var R = 6371;
+            var dLat = (lat2 - lat1) * Math.PI / 180;
+            var dLon = (lon2 - lon1) * Math.PI / 180;
+            var a = 
+                0.5 - Math.cos(dLat)/2 + 
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+                (1 - Math.cos(dLon))/2;
+            return R * 2 * Math.asin(Math.sqrt(a));
+        }
+
+        function generateStars(starCount) {
+            let stars = '';
+            for (let i = 0; i < 5; i++) {
+                stars += i < starCount ? '★' : '☆';
+            }
+            return stars;
+        }
+
+        var customIcon = L.icon({
+            iconUrl: 'https://static.vecteezy.com/system/resources/thumbnails/016/314/913/small_2x/current-location-logo-world-map-location-logo-sign-map-graphic-free-png.png',
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32]
+        });
+
+        var ugaArchIcon = L.icon({
+            iconUrl: 'https://brand.uga.edu/wp-content/uploads/UGA_logo_TopShield_FC_MARCM-768x1151.png',
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32]
+        });
+
+        houses.forEach(function(house) {
+            var distanceToCampus = calculateDistance(house.lat, house.lon, ugaCampus[0], ugaCampus[1]).toFixed(2);
+
+            var houseItem = document.createElement('div');
+            houseItem.className = 'house-item';
+            houseItem.innerHTML = `
+                <div class="house-title">${house.title}</div>
+                <div class="house-details">Distance to UGA: ${distanceToCampus} km</div>
+                <div class="house-details">Rooms available: ${house.rooms}</div>
+                <div class="house-details stars">${generateStars(house.reviews.stars)} (${house.reviews.stars.toFixed(1)} | ${house.reviews.count} reviews)</div>
+            `;
+            document.getElementById('list').appendChild(houseItem);
+
+            var marker = L.marker([house.lat, house.lon], {icon: customIcon}).addTo(map)
+                .bindPopup(`
+                    <strong>${house.title}</strong><br>
+                    Distance to UGA: ${distanceToCampus} km<br>
+                    Rooms available: ${house.rooms}<br>
+                    <span class="stars">${generateStars(house.reviews.stars)}</span> (${house.reviews.stars.toFixed(1)} | ${house.reviews.count} reviews)
+                `);
+
+            houseItem.addEventListener('click', function() {
+                map.setView([house.lat, house.lon], 16);
+                marker.openPopup();
+            });
+        });
+
+        var ugaArchMarker = L.marker([33.95757623704827, -83.37530070165933], {icon: ugaArchIcon})
+            .addTo(map)
+            .bindPopup('<strong>UGA Arch</strong><br>The gateway to the historic North Campus of UGA.');
+
+        var ugaArchItem = document.createElement('div');
+        ugaArchItem.className = 'house-item';
+        ugaArchItem.innerHTML = `
+            <div class="house-title" style="color: #BA0C2F;">UGA Arch</div>
+            <div class="house-details">The gateway to the historic North Campus of UGA.</div>
+        `;
+        document.getElementById('list').appendChild(ugaArchItem);
+
+        ugaArchItem.addEventListener('click', function() {
+            map.setView([33.95757623704827, -83.37530070165933], 16);
+            ugaArchMarker.openPopup();
+        });
+    </script>
+</body>
+</html>

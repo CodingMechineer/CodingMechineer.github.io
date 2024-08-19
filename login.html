@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UGA Login</title>
     <style>
-        /* Include the same CSS styles from before */
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
@@ -27,11 +26,26 @@
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
             max-width: 600px;
             width: 100%;
+            position: relative; /* Added to position the back arrow */
             transition: transform 0.3s ease;
         }
 
         .container:hover {
             transform: scale(1.02);
+        }
+
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: #BA0C2F;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .back-arrow:hover {
+            transform: translateX(-5px); /* Slight shift when hovered */
         }
 
         header {
@@ -97,38 +111,85 @@
             box-shadow: 0 0 0 4px rgba(186, 12, 47, 0.3);
         }
 
+        .button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .loading {
             font-size: 18px;
             color: #BA0C2F;
             margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-left: 10px;
+            border: 3px solid #BA0C2F;
+            border-top: 3px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="back-arrow" onclick="goBack()">&#8592;</div> <!-- Back arrow added -->
         <header>
             <img src="Media\GEORGIA-FS-FC.png" alt="UGA Housing Logo" class="logo">
         </header>
         <main>
             <h1 class="title">UGA Home Finder</h1>
             <div class="input-group">
-                <label for="myid">Enter MyID</label>
-                <input type="text" id="myid" placeholder="Enter your MyID">
+                <label for="ugaemail">Enter UGA Email</label>
+                <input type="text" id="ugaemail" placeholder="Enter your UGA email">
             </div>
             <div class="input-group">
                 <label for="password">Enter Password</label>
                 <input type="password" id="password" placeholder="Enter your password">
             </div>
-            <button class="button" onclick="handleLogin()">Submit</button>
+            <button class="button" id="submit-button" onclick="handleLogin()" disabled>Submit</button>
             <div id="loading" class="loading" style="display: none;">Loading...</div>
         </main>
     </div>
     <script>
+        const emailInput = document.getElementById('ugaemail');
+        const submitButton = document.getElementById('submit-button');
+
+        emailInput.addEventListener('input', function () {
+            const email = emailInput.value;
+            if (email.endsWith('@uga.edu')) {
+                submitButton.disabled = false;
+            } else {
+                submitButton.disabled = true;
+            }
+        });
+
         function handleLogin() {
-            document.getElementById('loading').style.display = 'block';
+            document.getElementById('loading').style.display = 'flex';
             setTimeout(() => {
                 window.location.href = 'dashboard.html';
             }, 2000); // Simulate loading for 2 seconds
+        }
+
+        function goBack() {
+            window.history.back(); // Function to go back to the previous page
         }
     </script>
 </body>
