@@ -84,6 +84,10 @@
         if (window.innerWidth < 1024) {
             document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024');
         }
+
+        function goBack() {
+            window.location.href = 'dashboard.html'; // Always go to index.html
+        }
     </script>
 </head>
 <body>
@@ -97,10 +101,5 @@
             <p class="coming-soon">Stay tuned for updates!</p>
         </main>
     </div>
-    <script>
-    function goBack() {
-        window.location.href = 'index.html'; // Always go to index.html
-    }
-    </script>
 </body>
 </html>
