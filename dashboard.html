@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UGA Dashboard</title>
     <style>
-        /* Same CSS as before */
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
@@ -21,14 +20,45 @@
         .container {
             text-align: center;
             background: white;
-            padding: 40px;
+            padding: 40px 20px;
             border-radius: 12px;
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
             max-width: 600px;
             width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logout-button {
+            background-color: #BA0C2F;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            z-index: 100; /* Ensures visibility on top of everything */
+        }
+
+        .logout-button:hover {
+            background-color: #a00a2a;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .logout-button:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(186, 12, 47, 0.3);
         }
 
         header {
+            margin-top: 30px; /* Adds spacing between the log out button and the image */
             margin-bottom: 30px;
         }
 
@@ -65,7 +95,6 @@
             text-transform: uppercase;
             transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
             width: 600px;
-            gap: 20px;
         }
 
         .button:hover {
@@ -117,6 +146,8 @@
     </style>
 </head>
 <body>
+    <button class="logout-button" onclick="logout()">Log out</button>
+    
     <div class="container">
         <header>
             <img src="Media\DAWG_HOUSING.png" alt="UGA Housing Logo" class="logo">
@@ -134,5 +165,12 @@
             </div>
         </main>
     </div>
+
+    <script>
+        function logout() {
+            // Redirect to login page
+            window.location.href = 'login.html';
+        }
+    </script>
 </body>
 </html>
