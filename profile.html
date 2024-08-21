@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f4f4f4 0%, #e2e2e2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+            transition: opacity 0.5s ease;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+        }
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: #BA0C2F;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .back-arrow:hover {
+            transform: translateX(-5px); /* Slight shift when hovered */
+        }
+
+        header {
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            max-width: 500px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #BA0C2F;
+        }
+
+        .coming-soon {
+            font-size: 24px;
+            font-weight: 600;
+            margin-top: 20px;
+            color: #555;
+        }
+
+        @media only screen and (max-width: 1024px) {
+            body {
+                width: 1024px;
+            }
+            .container {
+                width: 1000px;
+            }
+        }
+    </style>
+    <script>
+        // Ensure viewport width is fixed for desktop-like experience
+        if (window.innerWidth < 1024) {
+            document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024');
+        }
+
+        function goBack() {
+            window.location.href = 'dashboard.html'; // Always go to index.html
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="back-arrow" onclick="goBack()">&#8592;</div> <!-- Back arrow added -->
+        <header>
+            <img src="Media\DAWG_HOUSING.png" alt="UGA Housing Logo" class="logo">
+        </header>
+        <main>
+            <h1 class="title">My Profile Coming Soon</h1>
+            <p class="coming-soon">Stay tuned for updates!</p>
+        </main>
+    </div>
+</body>
+</html>

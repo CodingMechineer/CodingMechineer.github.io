@@ -27,7 +27,19 @@
             width: 100%;
             box-sizing: border-box; /* Ensure padding is included in the width */
         }
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: #BA0C2F;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
 
+        .back-arrow:hover {
+            transform: translateX(-5px); /* Slight shift when hovered */
+        }
         header {
             margin-bottom: 30px;
         }
@@ -292,12 +304,15 @@
         if (window.innerWidth < 1024) {
             document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024');
         }
-        
+        function goBack() {
+            window.location.href = 'index.html'; // Always go to index.html
+        }
     </script>
 
 </head>
 <body>
     <div class="container">
+        <div class="back-arrow" onclick="goBack()">&#8592;</div> <!-- Back arrow added -->
         <header>
             <img src="Media\DAWG_HOUSING.png" alt="UGA Housing Logo" class="logo">
         </header>

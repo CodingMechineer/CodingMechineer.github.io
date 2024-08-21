@@ -29,7 +29,7 @@
             z-index: 1;
         }
 
-        .logout-button {
+        .logout-button, .profile-button {
             background-color: #BA0C2F;
             color: white;
             border: none;
@@ -41,24 +41,31 @@
             text-transform: uppercase;
             transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
             position: fixed;
-            top: 10px;
             right: 20px;
-            z-index: 100; /* Ensures visibility on top of everything */
+            z-index: 100;
         }
 
-        .logout-button:hover {
+        .logout-button {
+            top: 10px;
+        }
+
+        .profile-button {
+            top: 60px; /* Positioning it directly below the log-out button */
+        }
+
+        .logout-button:hover, .profile-button:hover {
             background-color: #a00a2a;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             transform: translateY(-2px);
         }
 
-        .logout-button:focus {
+        .logout-button:focus, .profile-button:focus {
             outline: none;
             box-shadow: 0 0 0 4px rgba(186, 12, 47, 0.3);
         }
 
         header {
-            margin-top: 30px; /* Adds spacing between the log out button and the image */
+            margin-top: 30px;
             margin-bottom: 30px;
         }
 
@@ -159,10 +166,21 @@
         if (window.innerWidth < 1024) {
             document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024');
         }
+
+        function logout() {
+            // Redirect to login page
+            window.location.href = 'login.html';
+        }
+
+        function goToProfile() {
+            // Redirect to profile page
+            window.location.href = 'profile.html';
+        }
     </script>
 </head>
 <body>
     <button class="logout-button" onclick="logout()">Log out</button>
+    <button class="profile-button" onclick="goToProfile()">Profile</button>
     
     <div class="container">
         <header>
@@ -181,12 +199,5 @@
             </div>
         </main>
     </div>
-
-    <script>
-        function logout() {
-            // Redirect to login page
-            window.location.href = 'login.html';
-        }
-    </script>
 </body>
 </html>
