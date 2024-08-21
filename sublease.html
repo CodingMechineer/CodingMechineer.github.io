@@ -32,6 +32,19 @@
         .container:hover {
             transform: scale(1.02);
         }
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: #BA0C2F;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .back-arrow:hover {
+            transform: translateX(-5px); /* Slight shift when hovered */
+        }
 
         header {
             margin-bottom: 30px;
@@ -75,6 +88,7 @@
 </head>
 <body>
     <div class="container">
+        <div class="back-arrow" onclick="goBack()">&#8592;</div> <!-- Back arrow added -->
         <header>
             <img src="Media\DAWG_HOUSING.png" alt="UGA Housing Logo" class="logo">
         </header>
@@ -83,5 +97,10 @@
             <p class="coming-soon">Stay tuned for updates!</p>
         </main>
     </div>
+    <script>
+    function goBack() {
+        window.location.href = 'index.html'; // Always go to index.html
+    }
+    </script>
 </body>
 </html>
