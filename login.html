@@ -162,29 +162,6 @@
         if (window.innerWidth < 1024) {
             document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024');
         }
-
-        const emailInput = document.getElementById('ugaemail');
-        const submitButton = document.getElementById('submit-button');
-
-        emailInput.addEventListener('input', function () {
-            const email = emailInput.value;
-            if (email.endsWith('@uga.edu')) {
-                submitButton.disabled = false;
-            } else {
-                submitButton.disabled = true;
-            }
-        });
-
-        function handleLogin() {
-            document.getElementById('loading').style.display = 'flex';
-            setTimeout(() => {
-                window.location.href = 'dashboard.html';
-            }, 1000);
-        }
-
-        function goBack() {
-            window.location.href = 'index.html'; // Always go to index.html
-        }
     </script>
 </head>
 <body>
@@ -207,5 +184,29 @@
             <div id="loading" class="loading" style="display: none;">Loading...</div>
         </main>
     </div>
+    <script>
+        const emailInput = document.getElementById('ugaemail');
+        const submitButton = document.getElementById('submit-button');
+
+        emailInput.addEventListener('input', function () {
+            const email = emailInput.value;
+            if (email.endsWith('@uga.edu')) {
+                submitButton.disabled = false;
+            } else {
+                submitButton.disabled = true;
+            }
+        });
+
+        function handleLogin() {
+            document.getElementById('loading').style.display = 'flex';
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1000);
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+    </script>
 </body>
 </html>
