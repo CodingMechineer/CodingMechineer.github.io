@@ -59,7 +59,23 @@
         .stars {
             color: #FFD700; /* Gold color for the stars */
         }
+
+        /* Force desktop mode layout */
+        @media only screen and (max-width: 1024px) {
+            body {
+                width: 1024px;
+            }
+            .container {
+                width: 1000px;
+            }
+        }
     </style>
+    <script>
+        // Ensure viewport width is fixed for desktop-like experience
+        if (window.innerWidth < 1024) {
+            document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024');
+        }
+    </script>
 </head>
 <body>
     <!-- Left Column: List of Houses -->
